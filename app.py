@@ -1,3 +1,13 @@
+import subprocess
+import sys
+
+# Auto-instalación de respaldo si el entorno de Streamlit omite requirements.txt
+try:
+    import supabase
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "supabase"])
+    import supabase
+
 import streamlit as st
 from supabase import create_client, Client
 
@@ -42,7 +52,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Conexión persistente a Supabase
+# Conexión persistente a Supabase vía Secrets de Streamlit
 SUPABASE_URL = st.secrets["SUPABASE_URL"]
 SUPABASE_KEY = st.secrets["SUPABASE_KEY"]
 
@@ -79,7 +89,7 @@ if rol == "Atleta (Evaluación)":
     seleccion = st.selectbox("Selecciona el instrumento a realizar:", list(opciones_pruebas.keys()))
     prueba_activa = opciones_pruebas[seleccion]
 
-    # Ficha Técnica estilo 11 Humans
+    # Ficha Técnica
     st.markdown(f"""
         <div class="card-ficha">
             <h2 style="color: #ffffff; margin-top: 0;">{prueba_activa['nombre_oficial']} ({prueba_activa['codigo']})</h2>
