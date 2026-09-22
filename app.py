@@ -1,13 +1,3 @@
-import subprocess
-import sys
-
-# Auto-instalación de respaldo si el entorno de Streamlit omite requirements.txt
-try:
-    import supabase
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "supabase"])
-    import supabase
-
 import streamlit as st
 from supabase import create_client, Client
 
